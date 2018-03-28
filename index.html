@@ -19,8 +19,9 @@
     <link href="vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    <link href="css/stylish-portfolio.min.css" rel="stylesheet">
 
+    <!-- TMAP -->
     <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=2742f43e-b608-47b7-aa94-a951253c81d0"></script>
 
   </head>
@@ -30,6 +31,7 @@
     <a class="menu-toggle rounded" href="#">
       <i class="fa fa-bars"></i>
     </a>
+
     <nav id="sidebar-wrapper">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
@@ -49,8 +51,7 @@
 
     <!-- Header -->
     <header class="masthead d-flex">
-      <div id="tmap" class="map">
-      </div>
+      <div id="tmap" class="map"></div>
     </header>
 
     <!-- About -->
@@ -61,6 +62,7 @@
             <h2>지도를 클릭해서 출발지와 도착지를 선택할 수 있습니다. </h2>
             <p class="lead mb-5">출발지와 도착지를 선택해주세요~!</p>
             <a class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">최적길 검색</a>
+            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">초기화</a>
           </div>
         </div>
       </div>
@@ -138,9 +140,6 @@
             <a class="btn btn-secondary btn-xs w-50">도착지 등록</a>
           </div>
         </div>
-      </div>
-      <div class="container text-center mt-5">
-        <a class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">최적길 검색</a>
       </div>
     </section>
 
