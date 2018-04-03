@@ -54,6 +54,17 @@
       <div id="tmap" class="map"></div>
     </header>
 
+    <!-- Result -->
+    <section class="bg-light" id="result">
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <pre id="result_box" class="text-primary lead mt-3 mb-3">출발지와 도착지를 선택해주세요~!</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- About -->
     <section class="content-section bg-light" id="search">
       <div class="container text-center">
@@ -61,8 +72,8 @@
           <div class="col-lg-10 mx-auto">
             <h2>지도를 클릭해서 출발지와 도착지를 선택할 수 있습니다. </h2>
             <p class="lead mb-5">출발지와 도착지를 선택해주세요~!</p>
-            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">최적길 검색</a>
-            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">초기화</a>
+            <a id='find_btn' class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">최적길 검색</a>
+            <a id='reset_btn' class="btn btn-dark btn-xl js-scroll-trigger" href="#page-top">초기화</a>
           </div>
         </div>
       </div>
@@ -170,7 +181,7 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="js/stylish-portfolio.min.js"></script>
+    <script src="js/stylish-portfolio.js"></script>
 
   </body>
 
