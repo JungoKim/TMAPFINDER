@@ -40,6 +40,12 @@
     }
   });
 
+  function goTop() {
+    $('html, body').animate({
+      scrollTop: 0
+    }, 1000, "easeInOutExpo");
+  }
+
   // 맵 변수 선언
   var headers = {};
   headers["appKey"]="2742f43e-b608-47b7-aa94-a951253c81d0";//실행을 위한 키 입니다. 발급받으신 AppKey를 입력하세요.
@@ -117,9 +123,6 @@
   });
 
   $('#find_btn').click(function() {
-
-    console.log("click");
-
     if (!marker_start) {
       write_result("출발지를 선택해주세요!");
       return;
@@ -204,4 +207,128 @@
     });
   });
 
+
+  $('#start_address_search_btn').click(function() {
+    if (window.start_position) {
+      alert("출발지가 이미 선택되었습니다. 새로 지정하시려면 초기화 버튼을 클릭해 주세요~!");
+      return;
+    }
+
+    var addr = [];
+    addr.push($('#start_address_input1').val());
+    addr.push($('#start_address_input2').val());
+    addr.push($('#start_address_input3').val());
+    addr.push($('#start_address_input4').val());
+
+    var fullAddr = '';
+    for(var i = 0; i < addr.length; i++) {
+      if (addr[i]) {
+       fullAddr += addr[i];
+       fullAddr += ' ';
+      }
+    }
+
+    if (!fullAddr) {
+      alert('출발지 주소를 입력해주세요!');
+      return;
+    }
+
+    console.log(fullAddr);
+
+    var url = "https://api2.sktelecom.com/tmap/geo/fullAddrGeo";//Full Text Geocoding 요청 API url 입니다.
+    var params = {
+      "version" : "1"//버전 정보입니다.
+      ,"fullAddr" : fullAddr //자동완성 키워드로 얻은 주소값중 하나입니다.
+      ,"appKey" : headers["appKey"]//위에서 설정한 앱 키입니다.
+    };
+    //위에서 설정한 정보를 통하여 api 요청을 보내고, 정보를 받습니다.
+    $.get(url, params, function(data){
+      if( data ){
+
+        if (data.error) {
+          alert('주소 검색을 실패하였습니다. 주소를 다시 입력해주세요!');
+          return;
+        }
+
+        var lon = data.coordinateInfo.coordinate[0].lon;//data에서 받아온  lon 좌표값 입니다.
+        var lat = data.coordinateInfo.coordinate[0].lat;//data에서 받아온  lat 좌표값 입니다.
+
+        var lonlat = new Tmap.LonLat(lon, lat).transform("EPSG:4326", "EPSG:3857");//Icon 좌표를 설정합니다.
+        var size = new Tmap.Size(24,38);//Icon 크기 설정을 합니다.
+        var offset = new Tmap.Pixel(-(size.w/2), -size.h);//Icon 중심점을 설정합니다.
+        var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',size, offset);//마커 아이콘 설정
+
+        marker_start = new Tmap.Marker(lonlat, icon);//마커 생성
+        markerLayer.addMarker(marker_start);//마커 레이어에 마커 추가
+        window.start_position = lonlat;
+        write_result("출발지가 선택되었습니다.");
+
+        map.setCenter(lonlat,16);//map의 중심좌표를 설정합니다.
+
+        goTop();
+      }
+    });
+  });
+
+
+  $('#end_address_search_btn').click(function() {
+    if (window.end_position) {
+      alert('도착지가 이미 선택되었습니다. 새로 지정하시려면 초기화 버튼을 클릭해 주세요~!');
+      return;
+    }
+
+    var addr = [];
+    addr.push($('#end_address_input1').val());
+    addr.push($('#end_address_input2').val());
+    addr.push($('#end_address_input3').val());
+    addr.push($('#end_address_input4').val());
+
+    var fullAddr = '';
+    for(var i = 0; i < addr.length; i++) {
+      if (addr[i]) {
+       fullAddr += addr[i];
+       fullAddr += ' ';
+      }
+    }
+
+    if (!fullAddr) {
+      alert('출발지 주소를 입력해주세요!');
+      return;
+    }
+
+    console.log(fullAddr);
+
+    var url = "https://api2.sktelecom.com/tmap/geo/fullAddrGeo";//Full Text Geocoding 요청 API url 입니다.
+    var params = {
+      "version" : "1"//버전 정보입니다.
+      ,"fullAddr" : fullAddr //자동완성 키워드로 얻은 주소값중 하나입니다.
+      ,"appKey" : headers["appKey"]//위에서 설정한 앱 키입니다.
+    };
+    //위에서 설정한 정보를 통하여 api 요청을 보내고, 정보를 받습니다.
+    $.get(url, params, function(data){
+      if( data ){
+
+        if (data.error) {
+          alert('주소 검색을 실패하였습니다. 주소를 다시 입력해주세요!');
+          return;
+        }
+
+        var lon = data.coordinateInfo.coordinate[0].lon;//data에서 받아온  lon 좌표값 입니다.
+        var lat = data.coordinateInfo.coordinate[0].lat;//data에서 받아온  lat 좌표값 입니다.
+
+        var lonlat = new Tmap.LonLat(lon, lat).transform("EPSG:4326", "EPSG:3857");//Icon 좌표를 설정합니다.
+        var size = new Tmap.Size(24,38);//Icon 크기 설정을 합니다.
+        var offset = new Tmap.Pixel(-(size.w/2), -size.h);//Icon 중심점을 설정합니다.
+        var icon = new Tmap.Icon('http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',size, offset);//마커 아이콘 설정
+
+        marker_end = new Tmap.Marker(lonlat, icon);//마커 생성
+        markerLayer.addMarker(marker_end);//마커 레이어에 마커 추가
+        window.end_position = lonlat;
+        write_result("도착지가 선택되었습니다.");
+
+        map.setCenter(lonlat,16);//map의 중심좌표를 설정합니다.
+        goTop();
+      }
+    });
+  });
 })(jQuery); // End of use strict
