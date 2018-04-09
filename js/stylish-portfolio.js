@@ -46,6 +46,13 @@
     }, 1000, "easeInOutExpo");
   }
 
+  function goSearch() {
+    var target = $('#search');
+    $('html, body').animate({
+      scrollTop: target.offset().top
+    }, 1000, "easeInOutExpo");
+  }
+
   // 맵 변수 선언
   var headers = {};
   headers["appKey"]="2742f43e-b608-47b7-aa94-a951253c81d0";//실행을 위한 키 입니다. 발급받으신 AppKey를 입력하세요.
@@ -96,6 +103,7 @@
       markerLayer.addMarker(marker_end);//마커 레이어에 마커 추가
       write_result("도착지가 선택되었습니다.");
       window.end_position = lonlat;
+      goSearch();
     } else {
       write_result("출발지와 도착지가 이미 선택되었습니다. 새로 지정하시려면 초기화 버튼을 클릭해 주세요~!");
     }
@@ -121,6 +129,7 @@
     window.end_position = null;
     routeLayer.removeAllFeatures();//레이어의 모든 도형을 지웁니다.
     write_result('초기화 되었습니다.');
+    goTop();
   });
 
   $('#find_btn').click(function() {
