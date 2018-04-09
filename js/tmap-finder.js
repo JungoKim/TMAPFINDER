@@ -63,6 +63,8 @@
   window.end_position;
   var prtcl, xmlDoc;
 
+  var mouse_move = false;
+
 
   // map 생성함수 선언
   function initTmap(){
@@ -72,7 +74,18 @@
                 height:'100%' // map의 height 설정
     }); 
     map.events.register("click", map, onClick);//map 클릭 이벤트를 등록합니다.
-    map.events.register("touchend", map, onClick);//map 클릭 이벤트를 등록합니다.
+    map.events.register("touchend", map, function(e){
+                          console.log("touch end");
+                          if (mouse_move) {
+                            mouse_move = false;
+                          } else {
+                            onClick(e);
+                          }
+                        });//map 클릭 이벤트를 등록합니다.
+    map.events.register("touchmove", map, function() {
+                          console.log("touch move");
+                          mouse_move = true;
+                        });//map 클릭 이벤트를 등록합니다.
 
     markerLayer = new Tmap.Layer.Markers();//맵 레이어 생성
     map.addLayer(markerLayer);//map에 맵 레이어를 추가합니다
