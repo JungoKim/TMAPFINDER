@@ -65,6 +65,7 @@
                 height:'100%' // map의 height 설정
     }); 
     map.events.register("click", map, onClick);//map 클릭 이벤트를 등록합니다.
+    map.events.register("touchend", map, onClick);//map 클릭 이벤트를 등록합니다.
 
     markerLayer = new Tmap.Layer.Markers();//맵 레이어 생성
     map.addLayer(markerLayer);//map에 맵 레이어를 추가합니다
